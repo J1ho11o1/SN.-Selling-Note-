@@ -4,378 +4,290 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SN. Selling Note</title>
+<title>SN. - Selling Note</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;padding:25px;
+ margin:0;padding:25px 20px;
+ font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
  background:#fff;color:#171717;
- font-family:-apple-system,BlinkMacSystemFont,
- "Helvetica Neue",sans-serif;
 }
 .container{max-width:520px;margin:auto}
 header{
- padding-bottom:25px;
+ display:flex;justify-content:space-between;
+ align-items:center;padding:15px 0 25px;
  border-bottom:1px solid #eee;
- margin-bottom:35px;
 }
-.logo{font-size:36px;font-weight:850;letter-spacing:-2px}
-.sublogo{color:#999;letter-spacing:4px;font-size:12px}
-h1{font-size:30px;letter-spacing:-1px}
-h2{font-size:22px;margin-top:40px}
-.muted{color:#999;font-weight:550}
+.logo{font-size:32px;font-weight:850;letter-spacing:-2px}
+.sub{font-size:11px;letter-spacing:4px;color:#999}
+button,input,select{font:inherit}
+button{
+ border:0;border-radius:15px;padding:17px;
+ font-weight:700;cursor:pointer;
+}
+.lang{background:#f3f3f3;padding:10px 15px}
+h1{font-size:30px;margin-top:35px}
+.muted{color:#888}
 .card{
- background:#f5f5f5;border-radius:26px;
- padding:25px;margin:18px 0;
+ background:#f5f5f5;border-radius:25px;
+ padding:25px;margin:20px 0;
 }
-.big{font-size:42px;font-weight:850;margin:20px 0}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.revenue{font-size:38px;font-weight:850;margin:15px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .stat{
  border:1px solid #eee;border-radius:22px;
- padding:20px;min-width:0;
+ padding:20px 15px;
 }
-.stat strong{font-size:30px;display:block;margin:15px 0}
-button{
- border:0;border-radius:17px;padding:17px;
- font-size:16px;font-weight:700;cursor:pointer;
-}
-.black{background:#171717;color:white}
-.gray{background:#f3f3f3;color:#171717}
+.stat strong{display:block;font-size:30px;margin:12px 0}
+h3{margin-top:35px}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.full{width:100%;margin-top:12px}
+.primary{background:#171717;color:white;width:100%}
+.secondary{background:#f3f3f3;color:#171717;width:100%}
+.panel{
+ border:1px solid #e9e9e9;border-radius:22px;
+ padding:22px;margin:15px 0;
+}
+label{display:block;color:#888;margin:18px 0 8px}
 input,select{
- width:100%;padding:16px;margin:8px 0 15px;
- border:1px solid #e5e5e5;border-radius:13px;
- background:white;font-size:16px;
+ width:100%;padding:17px;
+ border:1px solid #ddd;border-radius:14px;
+ background:#fafafa;color:#171717;
 }
-label{font-size:14px;font-weight:700}
-.item{
- border:1px solid #eee;border-radius:22px;
- padding:20px;margin:12px 0;
-}
-.itemtop{display:flex;justify-content:space-between;gap:10px}
-.item h3{margin:0;font-size:19px}
-.small{font-size:14px;color:#999;line-height:2}
-.delete{background:#f5f5f5;color:#888;padding:10px}
+.product{border:1px solid #eee;border-radius:20px;padding:20px;margin:12px 0}
+.product strong{font-size:20px}
+.small{font-size:13px;color:#888;line-height:2}
+.delete{float:right;background:#f3f3f3;padding:8px 12px;color:#888}
+.sale{border-bottom:1px solid #eee;padding:15px 0}
 .hidden{display:none}
-.sale{
- border-bottom:1px solid #eee;padding:16px 0;
-}
-.sale strong{font-size:17px}
-footer{text-align:center;color:#aaa;margin:45px 0;font-size:12px}
+footer{text-align:center;color:#aaa;padding:40px 0}
 </style>
 </head>
-
 <body>
 <div class="container">
 
 <header>
- <div class="logo">SN.</div>
- <div class="sublogo">SELLING NOTE</div>
+ <div>
+  <div class="logo">SN.</div>
+  <div class="sub">SELLING NOTE</div>
+ </div>
+ <button class="lang" onclick="toggleLang()">한국어 / EN</button>
 </header>
 
-<h1>안녕하세요!</h1>
-<p class="muted">Welcome to your selling dashboard.</p>
+<h1 id="welcome">안녕하세요!</h1>
+<p class="muted" id="intro">나의 판매 관리 대시보드</p>
 
 <div class="card">
- <p class="muted">이번 달 총매출 · Monthly Revenue</p>
- <div class="big" id="revenue">₩0</div>
- <p class="muted">이번 달 예상 이익 · Monthly Profit</p>
- <h2 id="profit">₩0</h2>
+ <div class="muted" id="revenueTitle">이번 달 총매출 · Monthly Revenue</div>
+ <div class="revenue" id="revenue">₩0</div>
+ <div class="muted" id="profit">예상 순이익 ₩0</div>
 </div>
 
-<div class="stats">
+<div class="grid">
  <div class="stat">
-  <span class="muted">등록 상품 · Products</span>
+  <span class="muted" id="productTitle">등록 상품</span>
   <strong id="productCount">0</strong>
   <span class="muted">Total products</span>
  </div>
  <div class="stat">
-  <span class="muted">판매 건수 · Orders</span>
+  <span class="muted" id="orderTitle">판매 건수</span>
   <strong id="orderCount">0</strong>
   <span class="muted">Total orders</span>
  </div>
 </div>
 
-<h2>빠른 메뉴 · Quick Actions</h2>
+<h3 id="quickTitle">빠른 메뉴 · Quick Actions</h3>
 <div class="actions">
- <button class="black" onclick="show('productForm')">
- + 상품 등록
- </button>
- <button class="gray" onclick="show('saleForm')">
- + 판매 기록
- </button>
+ <button class="primary" onclick="show('add')">＋ 상품 등록</button>
+ <button class="secondary" onclick="show('sell')">＋ 판매 기록</button>
 </div>
 
-<!-- 상품 등록 -->
-<section id="productForm" class="card hidden">
- <h2>상품 등록 · Add Product</h2>
- <label>상품명</label>
- <input id="pName" placeholder="상품 이름">
- <label>판매 가격</label>
- <input id="pPrice" type="number" placeholder="15000">
- <label>매입 가격</label>
- <input id="pCost" type="number" placeholder="7000">
- <label>재고 수량</label>
- <input id="pStock" type="number" placeholder="20">
- <button class="black full" onclick="addProduct()">상품 저장</button>
- <button class="gray full" onclick="hideForms()">취소</button>
+<section id="add">
+ <h3>새 상품 등록 · Add Product</h3>
+ <div class="panel">
+  <label>상품명 · Product Name</label>
+  <input id="pname" placeholder="예: 무지 티셔츠">
+  <label>판매 가격 · Selling Price (₩)</label>
+  <input id="price" type="number" placeholder="15000">
+  <label>매입 가격 · Purchase Price (₩)</label>
+  <input id="cost" type="number" placeholder="7000">
+  <label>재고 수량 · Stock Quantity</label>
+  <input id="stock" type="number" placeholder="20">
+  <br><br>
+  <button class="primary" onclick="addProduct()">상품 등록하기 · Add Product</button>
+ </div>
 </section>
 
-<!-- 판매 기록 -->
-<section id="saleForm" class="card hidden">
- <h2>판매 기록 · Add Sale</h2>
-
- <label>판매 상품</label>
- <select id="saleProduct">
-  <option value="">상품을 선택하세요</option>
- </select>
-
- <label>판매 수량</label>
- <input id="saleQty" type="number" min="1" value="1">
-
- <label>실제 판매 가격 (개당)</label>
- <input id="salePrice" type="number" placeholder="판매 가격">
-
- <p class="muted" id="salePreview">판매 상품을 선택하세요.</p>
-
- <button class="black full" onclick="addSale()">판매 기록 저장</button>
- <button class="gray full" onclick="hideForms()">취소</button>
+<section id="sell">
+ <h3>판매 기록 · Record Sale</h3>
+ <div class="panel">
+  <label>판매 상품 · Select Product</label>
+  <select id="sellProduct"></select>
+  <label>판매 수량 · Sales Quantity</label>
+  <input id="quantity" type="number" min="1" placeholder="판매 수량 입력">
+  <label>판매 날짜 · Sale Date</label>
+  <input id="saleDate" type="date">
+  <br><br>
+  <button class="primary" onclick="addSale()">판매 완료 · Complete Sale</button>
+ </div>
 </section>
 
-<h2>상품 목록 · Products</h2>
+<h3>상품 목록 · Products</h3>
 <div id="products"></div>
 
-<h2>최근 판매 · Recent Sales</h2>
+<h3>최근 판매 · Recent Sales</h3>
 <div id="sales"></div>
 
 <footer>SN. SELLING NOTE © 2026</footer>
 </div>
 
 <script>
-const KEY="sn_selling_note_v2";
-
-let data;
-try {
- data=JSON.parse(localStorage.getItem(KEY)) || {
-  products:[],sales:[]
- };
-} catch(e) {
- data={products:[],sales:[]};
-}
-
-function money(n){
- return "₩"+Number(n||0).toLocaleString("ko-KR");
-}
+let products=JSON.parse(localStorage.getItem('sn_products')||'[]');
+let sales=JSON.parse(localStorage.getItem('sn_sales')||'[]');
+let english=false;
 
 function save(){
- localStorage.setItem(KEY,JSON.stringify(data));
+ localStorage.setItem('sn_products',JSON.stringify(products));
+ localStorage.setItem('sn_sales',JSON.stringify(sales));
  render();
 }
 
-function show(id){
- hideForms();
- document.getElementById(id).classList.remove("hidden");
- if(id==="saleForm") updateSaleOptions();
+function money(n){
+ return '₩'+Number(n).toLocaleString('ko-KR');
 }
 
-function hideForms(){
- document.getElementById("productForm").classList.add("hidden");
- document.getElementById("saleForm").classList.add("hidden");
+function show(id){
+ document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
 function addProduct(){
- const name=document.getElementById("pName").value.trim();
- const price=Number(document.getElementById("pPrice").value);
- const cost=Number(document.getElementById("pCost").value);
- const stock=Number(document.getElementById("pStock").value);
+ let name=document.getElementById('pname').value.trim();
+ let price=Number(document.getElementById('price').value);
+ let cost=Number(document.getElementById('cost').value);
+ let stock=Number(document.getElementById('stock').value);
 
- if(!name || price<=0 || cost<0 ||
-    !Number.isInteger(stock) || stock<0){
-  alert("상품 정보를 올바르게 입력해 주세요.");
+ if(!name||price<=0||cost<0||stock<0||
+ !Number.isInteger(stock)){
+  alert('상품 정보를 정확히 입력해 주세요.');
   return;
  }
 
- data.products.push({
-  id:Date.now()+Math.random(),
-  name,price,cost,stock
+ products.push({
+  id:Date.now(),name,price,cost,stock
  });
 
+ document.getElementById('pname').value='';
+ document.getElementById('price').value='';
+ document.getElementById('cost').value='';
+ document.getElementById('stock').value='';
  save();
- hideForms();
- document.getElementById("pName").value="";
- document.getElementById("pPrice").value="";
- document.getElementById("pCost").value="";
- document.getElementById("pStock").value="";
- alert("상품이 등록되었습니다!");
+ alert('상품이 등록되었습니다.');
 }
-
-function updateSaleOptions(){
- const select=document.getElementById("saleProduct");
- select.innerHTML='<option value="">상품을 선택하세요</option>';
-
- data.products.forEach(p=>{
-  const option=document.createElement("option");
-  option.value=p.id;
-  option.textContent=p.name+" (재고 "+p.stock+"개)";
-  select.appendChild(option);
- });
-}
-
-function updatePreview(){
- const id=document.getElementById("saleProduct").value;
- const p=data.products.find(x=>String(x.id)===id);
- const qty=Number(document.getElementById("saleQty").value);
- const price=Number(document.getElementById("salePrice").value);
-
- if(!p){
-  document.getElementById("salePreview").textContent=
-   "판매 상품을 선택하세요.";
-  return;
- }
-
- const revenue=price*qty;
- const profit=(price-p.cost)*qty;
-
- document.getElementById("salePreview").textContent=
-  "예상 매출: "+money(revenue)+
-  " / 예상 이익: "+money(profit)+
-  " / 현재 재고: "+p.stock+"개";
-}
-
-document.getElementById("saleProduct").addEventListener("change",()=>{
- const p=data.products.find(x=>
-  String(x.id)===document.getElementById("saleProduct").value
- );
- if(p) document.getElementById("salePrice").value=p.price;
- updatePreview();
-});
-
-["saleQty","salePrice"].forEach(id=>{
- document.getElementById(id).addEventListener("input",updatePreview);
-});
 
 function addSale(){
- const id=document.getElementById("saleProduct").value;
- const p=data.products.find(x=>String(x.id)===id);
- const qty=Number(document.getElementById("saleQty").value);
- const price=Number(document.getElementById("salePrice").value);
+ let id=Number(document.getElementById('sellProduct').value);
+ let qty=Number(document.getElementById('quantity').value);
+ let product=products.find(p=>p.id===id);
+ let date=document.getElementById('saleDate').value;
 
- if(!p || !Number.isInteger(qty) || qty<=0 ||
-    !Number.isFinite(price) || price<=0){
-  alert("판매 정보를 올바르게 입력해 주세요.");
+ if(!product||!Number.isInteger(qty)||qty<=0||!date){
+  alert('판매 정보를 확인해 주세요.');
   return;
  }
 
- if(qty>p.stock){
-  alert("재고가 부족합니다.");
+ if(qty>product.stock){
+  alert('재고가 부족합니다.');
   return;
  }
 
- const revenue=price*qty;
- const profit=(price-p.cost)*qty;
+ product.stock-=qty;
 
- data.sales.unshift({
-  id:Date.now()+Math.random(),
-  productId:p.id,
-  name:p.name,
-  qty,price,cost:p.cost,
-  revenue,profit,
-  date:new Date().toISOString()
+ sales.unshift({
+  id:Date.now(),
+  name:product.name,
+  qty,
+  price:product.price,
+  cost:product.cost,
+  date
  });
 
- p.stock-=qty;
-
+ document.getElementById('quantity').value='';
  save();
- hideForms();
- document.getElementById("saleQty").value=1;
- document.getElementById("salePrice").value="";
- alert("판매 기록이 저장되었습니다!");
+ alert('판매 기록이 저장되었습니다.');
 }
 
 function deleteProduct(id){
- if(!confirm("이 상품을 삭제할까요?")) return;
- data.products=data.products.filter(p=>p.id!==id);
+ if(!confirm('상품을 삭제할까요?'))return;
+ products=products.filter(p=>p.id!==id);
  save();
 }
 
 function render(){
- const now=new Date();
- const month=now.getMonth();
- const year=now.getFullYear();
+ let now=new Date();
+ let month=now.toISOString().slice(0,7);
+ let monthly=sales.filter(s=>s.date.startsWith(month));
+ let revenue=monthly.reduce((a,s)=>a+s.price*s.qty,0);
+ let profit=monthly.reduce((a,s)=>a+(s.price-s.cost)*s.qty,0);
 
- const monthly=data.sales.filter(s=>{
-  const d=new Date(s.date);
-  return d.getMonth()===month && d.getFullYear()===year;
- });
+ document.getElementById('revenue').textContent=money(revenue);
+ document.getElementById('profit').textContent=
+ '예상 순이익 '+money(profit);
+ document.getElementById('productCount').textContent=products.length;
+ document.getElementById('orderCount').textContent=
+ monthly.reduce((a,s)=>a+s.qty,0);
 
- const revenue=monthly.reduce((a,s)=>a+s.revenue,0);
- const profit=monthly.reduce((a,s)=>a+s.profit,0);
+ document.getElementById('products').innerHTML=
+ products.map(p=>`
+ <div class="product">
+  <button class="delete" onclick="deleteProduct(${p.id})">삭제</button>
+  <strong>${escapeHTML(p.name)}</strong>
+  <div class="small">
+   판매 가격 · ${money(p.price)}<br>
+   매입 가격 · ${money(p.cost)}<br>
+   예상 개당 차익 · ${money(p.price-p.cost)}<br>
+   재고 · ${p.stock}개
+  </div>
+ </div>`).join('')||'<p class="muted">등록된 상품이 없습니다.</p>';
 
- document.getElementById("revenue").textContent=money(revenue);
- document.getElementById("profit").textContent=money(profit);
- document.getElementById("productCount").textContent=data.products.length;
- document.getElementById("orderCount").textContent=data.sales.length;
+ document.getElementById('sellProduct').innerHTML=
+ products.map(p=>`
+ <option value="${p.id}">${escapeHTML(p.name)} (재고 ${p.stock})</option>
+ `).join('')||'<option value="">등록된 상품 없음</option>';
 
- const products=document.getElementById("products");
- products.innerHTML="";
-
- if(data.products.length===0){
-  products.innerHTML='<p class="muted">등록된 상품이 없습니다.</p>';
- }
-
- data.products.forEach(p=>{
-  const div=document.createElement("div");
-  div.className="item";
-  const top=document.createElement("div");
-  top.className="itemtop";
-  const title=document.createElement("h3");
-  title.textContent=p.name;
-  const del=document.createElement("button");
-  del.className="delete";
-  del.textContent="삭제";
-  del.onclick=()=>deleteProduct(p.id);
-  top.append(title,del);
-
-  const details=document.createElement("p");
-  details.className="small";
-  details.textContent=
-   "판매 가격: "+money(p.price)+"\n"+
-   "매입 가격: "+money(p.cost)+"\n"+
-   "예상 개당 차익: "+money(p.price-p.cost)+"\n"+
-   "재고: "+p.stock+"개";
-  details.style.whiteSpace="pre-line";
-
-  div.append(top,details);
-  products.appendChild(div);
- });
-
- const sales=document.getElementById("sales");
- sales.innerHTML="";
-
- if(data.sales.length===0){
-  sales.innerHTML='<p class="muted">아직 판매 기록이 없습니다.</p>';
- }
-
- data.sales.forEach(s=>{
-  const div=document.createElement("div");
-  div.className="sale";
-
-  const date=new Date(s.date).toLocaleString("ko-KR");
-  const title=document.createElement("strong");
-  title.textContent=s.name+" × "+s.qty;
-
-  const details=document.createElement("p");
-  details.className="small";
-  details.textContent=
-   date+"\n매출: "+money(s.revenue)+
-   "\n이익: "+money(s.profit);
-  details.style.whiteSpace="pre-line";
-
-  div.append(title,details);
-  sales.appendChild(div);
- });
+ document.getElementById('sales').innerHTML=
+ sales.slice(0,20).map(s=>`
+ <div class="sale">
+  <strong>${escapeHTML(s.name)}</strong>
+  <div class="small">
+   ${s.date} · ${s.qty}개 · ${money(s.price*s.qty)}
+  </div>
+ </div>`).join('')||'<p class="muted">아직 판매 기록이 없습니다.</p>';
 }
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;',
+ '"':'&quot;',"'":'&#39;'
+ })[c]);
+}
+
+function toggleLang(){
+ english=!english;
+ document.getElementById('welcome').textContent=
+ english?'Welcome!':'안녕하세요!';
+ document.getElementById('intro').textContent=
+ english?'Your selling dashboard':'나의 판매 관리 대시보드';
+ document.getElementById('revenueTitle').textContent=
+ english?'Monthly Revenue':'이번 달 총매출 · Monthly Revenue';
+ document.getElementById('productTitle').textContent=
+ english?'Products':'등록 상품';
+ document.getElementById('orderTitle').textContent=
+ english?'Sales Quantity':'판매 건수';
+ document.getElementById('quickTitle').textContent=
+ english?'Quick Actions':'빠른 메뉴 · Quick Actions';
+}
+
+document.getElementById('saleDate').value=
+new Date().toLocaleDateString('en-CA');
 
 render();
 </script>
