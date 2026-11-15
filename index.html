@@ -6,22 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
 <title>SN. | Selling Note</title>
+
 <style>
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
-  padding: 28px 20px 40px;
+  padding: 28px 20px 45px;
   background: #fff;
   color: #171717;
   font-family: -apple-system, BlinkMacSystemFont,
     "Helvetica Neue", sans-serif;
 }
+
 .container {
   max-width: 520px;
   margin: auto;
 }
+
 header {
   display: flex;
   justify-content: space-between;
@@ -29,102 +33,209 @@ header {
   padding-bottom: 24px;
   border-bottom: 1px solid #eee;
 }
+
 .logo {
   font-size: 32px;
   font-weight: 750;
   letter-spacing: -2px;
 }
+
 .sub {
   color: #999;
   font-size: 10px;
   letter-spacing: 2px;
 }
+
 h2 {
   font-size: 25px;
   letter-spacing: -1px;
   margin: 30px 0 5px;
 }
+
 .muted {
   color: #888;
   font-size: 12px;
 }
+
 .revenue {
   margin-top: 25px;
   padding: 25px;
   background: #f6f6f6;
   border-radius: 18px;
 }
+
 .revenue strong {
   display: block;
   font-size: 34px;
   margin: 15px 0 8px;
-  letter-spacing: -1.5px;
 }
+
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 13px;
 }
+
 .stat {
   padding: 20px;
   border: 1px solid #eee;
   border-radius: 16px;
 }
+
 .stat strong {
   display: block;
   font-size: 25px;
   margin: 12px 0 5px;
 }
+
 .section-title {
   margin: 32px 0 15px;
   font-size: 15px;
   font-weight: 650;
 }
+
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+
 .action {
   padding: 20px 15px;
   border-radius: 15px;
   background: #f5f5f5;
   text-decoration: none;
   color: #171717;
+  border: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
 }
+
 .action.primary {
   background: #171717;
   color: white;
 }
+
 .action strong {
   display: block;
   margin-bottom: 7px;
 }
+
 .action span {
   font-size: 11px;
   opacity: .65;
 }
+
+.panel {
+  display: none;
+  margin-top: 25px;
+  padding: 22px;
+  border: 1px solid #eee;
+  border-radius: 18px;
+}
+
+.panel.show {
+  display: block;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #777;
+  margin: 17px 0 7px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 11px;
+  font-size: 16px;
+  outline: none;
+  background: #fafafa;
+  color: #171717;
+}
+
+input:focus {
+  border-color: #777;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  background: #171717;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.product {
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 17px;
+  margin-top: 12px;
+}
+
+.product-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.product-name {
+  font-weight: 650;
+  font-size: 16px;
+}
+
+.product-info {
+  color: #888;
+  font-size: 12px;
+  margin-top: 9px;
+  line-height: 1.8;
+}
+
+.delete {
+  border: none;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #777;
+  cursor: pointer;
+}
+
 .empty {
   text-align: center;
-  padding: 38px 10px;
+  padding: 30px 10px;
   color: #999;
   font-size: 13px;
 }
+
 footer {
   display: flex;
   justify-content: space-around;
   border-top: 1px solid #eee;
   padding-top: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
   color: #888;
   font-size: 12px;
 }
+
 footer span:first-child {
   color: #171717;
 }
+
+button:active {
+  opacity: .75;
+}
 </style>
 </head>
+
 <body>
 <div class="container">
 
@@ -138,20 +249,27 @@ footer span:first-child {
 
 <main>
   <h2>안녕하세요!</h2>
-  <div class="muted">Welcome to your selling dashboard.</div>
+  <div class="muted">
+    Welcome to your selling dashboard.
+  </div>
 
   <section class="revenue">
-    <div class="muted">이번 달 총매출 · Monthly Revenue</div>
+    <div class="muted">
+      이번 달 총매출 · Monthly Revenue
+    </div>
     <strong>₩0</strong>
-    <div class="muted">아직 등록된 판매 내역이 없습니다.</div>
+    <div class="muted">
+      판매 기록을 등록하면 매출을 관리할 수 있습니다.
+    </div>
   </section>
 
   <section class="stats">
     <div class="stat">
       <div class="muted">등록 상품 · Products</div>
-      <strong>0</strong>
+      <strong id="productCount">0</strong>
       <div class="muted">Total products</div>
     </div>
+
     <div class="stat">
       <div class="muted">판매 건수 · Orders</div>
       <strong>0</strong>
@@ -159,23 +277,66 @@ footer span:first-child {
     </div>
   </section>
 
-  <div class="section-title">빠른 메뉴 · Quick Actions</div>
+  <div class="section-title">
+    빠른 메뉴 · Quick Actions
+  </div>
+
   <section class="actions">
-    <a class="action primary" href="#products">
+    <button class="action primary" onclick="toggleForm()">
       <strong>＋ 상품 등록</strong>
       <span>Add Product</span>
-    </a>
-    <a class="action" href="#sales">
-      <strong>▤ 판매 기록</strong>
-      <span>Sales History</span>
-    </a>
+    </button>
+
+    <button class="action" onclick="showProducts()">
+      <strong>▤ 상품 목록</strong>
+      <span>Product List</span>
+    </button>
   </section>
 
-  <div class="section-title">최근 판매 · Recent Sales</div>
-  <section class="empty">
-    아직 판매 내역이 없습니다.<br>
-    Your recent sales will appear here.
+  <section class="panel" id="formPanel">
+    <h3>새 상품 등록</h3>
+    <div class="muted">Add a new product</div>
+
+    <form id="productForm">
+
+      <label for="name">상품명 · Product Name</label>
+      <input id="name" type="text"
+        placeholder="예: 무지 티셔츠" required>
+
+      <label for="price">판매 가격 · Selling Price (₩)</label>
+      <input id="price" type="number"
+        min="0" step="1" placeholder="15000" required>
+
+      <label for="cost">매입 가격 · Purchase Price (₩)</label>
+      <input id="cost" type="number"
+        min="0" step="1" placeholder="7000" required>
+
+      <label for="stock">재고 수량 · Stock Quantity</label>
+      <input id="stock" type="number"
+        min="0" step="1" placeholder="20" required>
+
+      <button class="submit" type="submit">
+        상품 등록하기 · Add Product
+      </button>
+    </form>
   </section>
+
+  <section id="productSection">
+    <div class="section-title">
+      상품 목록 · Products
+    </div>
+    <div id="productList"></div>
+  </section>
+
+  <div class="section-title">
+    최근 판매 · Recent Sales
+  </div>
+
+  <div class="empty">
+    아직 판매 내역이 없습니다.<br>
+    No sales recorded yet.
+  </div>
+
 </main>
 
 <footer>
@@ -186,8 +347,173 @@ footer span:first-child {
 </footer>
 
 </div>
+
+<script>
+const STORAGE_KEY = "sn_products_v1";
+
+let products = [];
+
+try {
+  products = JSON.parse(
+    localStorage.getItem(STORAGE_KEY) || "[]"
+  );
+
+  if (!Array.isArray(products)) products = [];
+} catch (error) {
+  products = [];
+}
+
+function saveProducts() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(products)
+    );
+  } catch (error) {
+    alert("저장에 실패했습니다. 브라우저 저장공간을 확인해 주세요.");
+  }
+}
+
+function toggleForm() {
+  const panel = document.getElementById("formPanel");
+  panel.classList.toggle("show");
+
+  if (panel.classList.contains("show")) {
+    panel.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("name").focus();
+  }
+}
+
+function showProducts() {
+  document.getElementById("productSection")
+    .scrollIntoView({ behavior: "smooth" });
+}
+
+function formatMoney(value) {
+  return Number(value).toLocaleString("ko-KR");
+}
+
+document.getElementById("productForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("name")
+      .value.trim();
+
+    const price = Number(
+      document.getElementById("price").value
+    );
+
+    const cost = Number(
+      document.getElementById("cost").value
+    );
+
+    const stock = Number(
+      document.getElementById("stock").value
+    );
+
+    if (
+      !name ||
+      !Number.isSafeInteger(price) ||
+      !Number.isSafeInteger(cost) ||
+      !Number.isSafeInteger(stock) ||
+      price < 0 || cost < 0 || stock < 0
+    ) {
+      alert("입력 내용을 확인해 주세요.");
+      return;
+    }
+
+    const product = {
+      id: Date.now() + "-" + Math.random(),
+      name: name,
+      price: price,
+      cost: cost,
+      stock: stock
+    };
+
+    products.push(product);
+    saveProducts();
+    renderProducts();
+
+    this.reset();
+
+    document.getElementById("formPanel")
+      .classList.remove("show");
+
+    alert("상품이 등록되었습니다!");
+  });
+
+function deleteProduct(id) {
+  if (!confirm("이 상품을 삭제할까요?")) return;
+
+  products = products.filter(
+    product => product.id !== id
+  );
+
+  saveProducts();
+  renderProducts();
+}
+
+function renderProducts() {
+  const list = document.getElementById("productList");
+
+  document.getElementById("productCount")
+    .textContent = products.length;
+
+  if (products.length === 0) {
+    list.innerHTML =
+      '<div class="empty">등록된 상품이 없습니다.<br>No products yet.</div>';
+    return;
+  }
+
+  list.innerHTML = products.map(product => `
+    <article class="product">
+      <div class="product-top">
+        <div class="product-name">
+          ${escapeHTML(product.name)}
+        </div>
+        <button class="delete"
+          data-id="${escapeHTML(product.id)}">
+          삭제
+        </button>
+      </div>
+
+      <div class="product-info">
+        판매 가격 · Selling price:
+        ₩${formatMoney(product.price)}<br>
+
+        매입 가격 · Purchase price:
+        ₩${formatMoney(product.cost)}<br>
+
+        예상 개당 차액 · Difference:
+        ₩${formatMoney(product.price - product.cost)}<br>
+
+        재고 · Stock:
+        ${formatMoney(product.stock)}개
+      </div>
+    </article>
+  `).join("");
+
+  list.querySelectorAll(".delete").forEach(button => {
+    button.addEventListener("click", () => {
+      deleteProduct(button.dataset.id);
+    });
+  });
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+renderProducts();
+</script>
+
 </body>
 </html>
-
-
-
