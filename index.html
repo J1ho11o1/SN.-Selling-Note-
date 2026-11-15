@@ -64,19 +64,23 @@ footer{text-align:center;color:#aaa;padding:40px 0}
 /* SN Minimal Input Design */
 input:focus,
 textarea:focus,
-select:focus {
+select:focus,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
     outline: none !important;
-    border-color: #bdbdbd !important;
+    border: 1px solid #c8c8c8 !important;
     box-shadow: none !important;
-    transition: all 0.25s ease;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 input,
 textarea,
 select {
-    transition: all 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s ease;
 }
-
 </style>
 </head>
 <body>
